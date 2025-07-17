@@ -12,8 +12,7 @@ You can:
 
 * **`freq`**: the pandas frequency string that describes the spacing of your
   timestamps (`"H"` for hourly, `"D"` for daily, `"MS"` for monthly-start,
-  etc.).  It tells the models how many observations occur in one unit of
-  *seasonality*.
+  etc.).  
 * **`seasonality`**: the length of the dominant seasonal cycle expressed in
   number of `freq` periods (24 for hourly data with a daily cycle, 12 for
   monthly‐start data with a yearly cycle, …).  See
@@ -55,7 +54,7 @@ from timecopilot.agent import TimeCopilot
 df = pd.read_csv("https://timecopilot.s3.amazonaws.com/public/data/air_passengers.csv")
 query = """
   Which months will have peak passenger traffic in the next 24 months? 
-  use 12 as seasonality
+  use 12 as seasonality, and "MS" as frequency
 """ 
 
 tc = TimeCopilot(llm="gpt-4o")

@@ -2760,6 +2760,14 @@ wheels = [
 ]
 
 [[package]]
+name = "mktestdocs"
+version = "0.2.4"
+source = { registry = "https://pypi.org/simple" }
+wheels = [
+    { url = "https://files.pythonhosted.org/packages/73/fd/f5abdc81159ebc960c4e75aeef0731143a7bb705e44b7b91f86369a254ab/mktestdocs-0.2.4-py2.py3-none-any.whl", hash = "sha256:10b047aec287ac4703e121515a76b133c611122280c69017f54d2e7d080cc880", size = 7141, upload-time = "2024-10-24T12:50:02.787Z" },
+]
+
+[[package]]
 name = "mlstm-kernels"
 version = "2.0.0"
 source = { registry = "https://pypi.org/simple" }
@@ -5339,6 +5347,7 @@ dependencies = [
 
 [package.dev-dependencies]
 dev = [
+    { name = "mktestdocs" },
     { name = "pre-commit" },
     { name = "pytest" },
     { name = "pytest-cov" },
@@ -5371,6 +5380,7 @@ requires-dist = [
 
 [package.metadata.requires-dev]
 dev = [
+    { name = "mktestdocs", specifier = ">=0.2.4" },
     { name = "pre-commit" },
     { name = "pytest" },
     { name = "pytest-cov" },

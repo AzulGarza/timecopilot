@@ -48,6 +48,7 @@ dependencies = [
 
 [dependency-groups]
 dev = [
+    "mktestdocs>=0.2.4",
     "pre-commit",
     "pytest",
     "pytest-cov",

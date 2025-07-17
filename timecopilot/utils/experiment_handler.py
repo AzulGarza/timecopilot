@@ -144,11 +144,10 @@ class ExperimentDatasetParser:
         if query:
             query = f"User query: {query}"
             dataset_params = self.parser_agent.run_sync(user_prompt=query).output
-            # Use provided non-None parameters if any are None
-            # in the inferred dataset_params
-            dataset_params.freq = dataset_params.freq or freq
-            dataset_params.seasonality = dataset_params.seasonality or seasonality
-            dataset_params.h = dataset_params.h or h
+            # user provided parameters take precedence over inferred parameters
+            dataset_params.freq = freq or dataset_params.freq
+            dataset_params.seasonality = seasonality or dataset_params.seasonality
+            dataset_params.h = h or dataset_params.h
         else:
             dataset_params = DatasetParams(
                 freq=freq,
