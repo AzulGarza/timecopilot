@@ -21,6 +21,10 @@ nav:
   - Documentation:
       - Time Series Model Hub: model_hub.md
       - Forecasting Parameters: forecasting_parameters.md
+  - Examples:
+      - Getting Started: examples/getting_started.ipynb
+      - Basic Forecasting: examples/basic_forecasting.ipynb
+      - Advanced Usage: examples/advanced_usage.ipynb
   - API Reference:
       - api/agent.md
       - api/forecaster.md
@@ -97,6 +101,7 @@ markdown_extensions:
 plugins:
   - search
   - autorefs
+  - mkdocs-jupyter
   - mkdocstrings:
       handlers:
         python:
