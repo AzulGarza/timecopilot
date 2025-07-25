@@ -128,6 +128,16 @@ class ForecastAgentOutput(BaseModel):
             "If the user did not provide a query, this field will be None."
         )
     )
+    # Additional fields to support prettify functionality
+    tsfeatures_results: list[str] = Field(
+        description="List of time series features and their values", default_factory=list
+    )
+    cross_validation_results: list[str] = Field(
+        description="List of model cross-validation results", default_factory=list
+    )
+    forecast: list[str] = Field(
+        description="List of forecast periods and values", default_factory=list
+    )
 
     def prettify(self, console: Console | None = None) -> None:
         """Pretty print the forecast results using rich formatting."""
@@ -419,11 +429,11 @@ class TimeCopilot:
             **kwargs,
         )
 
-        self.dataset: ExperimentDataset
-        self.fcst_df: pd.DataFrame
-        self.eval_df: pd.DataFrame
-        self.features_df: pd.DataFrame
-        self.models: list[str]
+        self.dataset: ExperimentDataset | None = None
+        self.fcst_df: pd.DataFrame | None = None
+        self.eval_df: pd.DataFrame | None = None
+        self.features_df: pd.DataFrame | None = None
+        self.models: list[str] | None = None
 
         @self.query_agent.system_prompt
         async def add_info(
@@ -539,9 +549,10 @@ class TimeCopilot:
         Check if the class is queryable.
         It needs to have `dataset`, `fcst_df`, `eval_df`, `features_df` and `models`.
         """
+        required_attrs = ["dataset", "fcst_df", "eval_df", "features_df", "models"]
         return all(
             hasattr(self, attr) and getattr(self, attr) is not None
-            for attr in ["dataset", "fcst_df", "eval_df", "features_df", "models"]
+            for attr in required_attrs
         )
 
     def forecast(
@@ -596,9 +607,13 @@ class TimeCopilot:
             user_prompt=query,
             deps=self.dataset,
         )
-        result.fcst_df = self.fcst_df
-        result.eval_df = self.eval_df
-        result.features_df = self.features_df
+        # Defensive assignment to prevent AttributeError if tools weren't called
+        if hasattr(self, 'fcst_df') and self.fcst_df is not None:
+            result.fcst_df = self.fcst_df
+        if hasattr(self, 'eval_df') and self.eval_df is not None:
+            result.eval_df = self.eval_df
+        if hasattr(self, 'features_df') and self.features_df is not None:
+            result.features_df = self.features_df
         return result
 
     def _maybe_raise_if_not_queryable(self):
@@ -718,9 +733,13 @@ class TimeCopilotAsync(TimeCopilot):
             user_prompt=query,
             deps=self.dataset,
         )
-        result.fcst_df = self.fcst_df
-        result.eval_df = self.eval_df
-        result.features_df = self.features_df
+        # Defensive assignment to prevent AttributeError if tools weren't called
+        if hasattr(self, 'fcst_df') and self.fcst_df is not None:
+            result.fcst_df = self.fcst_df
+        if hasattr(self, 'eval_df') and self.eval_df is not None:
+            result.eval_df = self.eval_df
+        if hasattr(self, 'features_df') and self.features_df is not None:
+            result.features_df = self.features_df
         return result
 
     @asynccontextmanager
