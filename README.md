@@ -107,9 +107,9 @@ TimeCopilot is available on PyPI as [`timecopilot`](https://pypi.org/project/tim
    
 and that's it!
 
-!!! Important
-    - TimeCopilot requires Python 3.10+. Additionally, it currently does not support macOS running on Intel processors (x86_64). If you’re using this setup, you may encounter installation issues with some dependencies like PyTorch. If you need support for this architecture, please create a new issue.
-    - If on Windows, Python 3.10 is recommended due to some of the packages' current architecture. 
+**Important !!!**
+- TimeCopilot requires Python 3.10+. Additionally, it currently does not support macOS running on Intel processors (x86_64). If you’re using this setup, you may encounter installation issues with some dependencies like PyTorch. If you need support for this architecture, please create a new issue.
+- If on Windows, Python 3.10 is recommended due to some of the packages' current architecture. 
 
 
 ---
@@ -121,6 +121,9 @@ Here is an example to test TimeCopilot:
 # Import libraries
 import pandas as pd
 from timecopilot import TimeCopilot
+
+# Use the following line if using a jupyter notebook environment!!!!
+nest_asyncio.apply()
 
 # Load the dataset
 # The DataFrame must include at least the following columns:
@@ -159,6 +162,23 @@ result = tc.forecast(df=df, freq="MS")
 # - forecast_analysis: Interpretation of the forecast results
 # - user_query_response: Response to the user prompt, if any
 print(result.output)
+
+# You can also access the forecast results in the same shape of the
+# provided input dataframe.  
+print(result.fcst_df)
+
+"""
+        unique_id         ds       Theta
+0   AirPassengers 1961-01-01  440.969208
+1   AirPassengers 1961-02-01  429.249237
+2   AirPassengers 1961-03-01  490.693176
+...
+21  AirPassengers 1962-10-01  472.164032
+22  AirPassengers 1962-11-01  411.458160
+23  AirPassengers 1962-12-01  462.795227
+"""
+
+```
 ```
 <details> <summary>Click to expand the full forecast output</summary>
 
